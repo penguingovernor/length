@@ -13,3 +13,5 @@ $ go get -u github.com/penguingovernor
 
 ## Documentation
 For all documentation related to this library, refer to the godoc linked at the top of this README.
+
+Examples are also available under the `examples` directory.
