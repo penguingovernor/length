@@ -3,7 +3,7 @@ package length
 import "fmt"
 
 // A Distance represents a physical distance
-// as an float64 nanometer count. The representation limits the
+// as a float64 nanometer count. The representation limits the
 // largest representable duration to approximately
 // 1.900163142869793e283 light years ≈ diameter of the observable universe (≈ 93 billion ly )
 type Distance float64
@@ -16,7 +16,7 @@ type Distance float64
 //
 // To convert an integer number of units to a Distance, multiply:
 //	meters := 10
-//	fmt.Print(length.Distance(seconds)*length.Meter) // prints 10m
+//	fmt.Print(length.Distance(meters)*length.Meter) // prints 10m
 //
 const (
 	Nanometer  Distance = 1
@@ -55,7 +55,7 @@ func UseImperial() {
 
 // String returns a string representing the distance in the form "10m" or "10yd".
 // The unit that is used is based on the state of the ToggleUnit function.
-// As a special case, durations less than one
+// As a special case, distances less than one
 // meter (or yard) use a smaller unit to ensure
 // that the leading digit is non-zero. The zero duration formats as 0m or 0yd.
 func (d Distance) String() string {
@@ -118,7 +118,7 @@ var unitMap = map[string]float64{
 // A distance string is a possibly signed sequence of
 // decimal numbers, each with optional fraction and a unit suffix,
 // such as "300m" or "-1.5ly"
-// Valid time units are "nm", "um" (or "µm"), "mm", "m", "km", "in", "ft", "yd", "mi", "ly".
+// Valid distance units are "nm", "um" (or "µm"), "mm", "m", "km", "in", "ft", "yd", "mi", "ly".
 func ParseDistance(s string) (Distance, error) {
 	// WIP
 	return Distance(0 * unitMap["m"]), nil
