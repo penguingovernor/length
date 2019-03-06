@@ -74,7 +74,7 @@ func (d Distance) printMetric() string {
 		return fmt.Sprintf("%fcm", float64(d)/float64(Centimeter))
 	}
 	if d >= 1*Millimeter {
-		return fmt.Sprintf("%fcm", float64(d)/float64(Millimeter))
+		return fmt.Sprintf("%fmm", float64(d)/float64(Millimeter))
 	}
 	if d >= 1*Micrometer {
 		return fmt.Sprintf("%fµm", float64(d)/float64(Micrometer))
@@ -96,4 +96,30 @@ func (d Distance) printImperial() string {
 		return fmt.Sprintf("0yd")
 	}
 	return fmt.Sprintf("%fin", float64(d)/float64(Inch))
+}
+
+var unitMap = map[string]float64{
+	"nm": float64(Nanometer),
+	"um": float64(Micrometer), // U+03BC = Greek letter mu
+	"µm": float64(Micrometer), // U+00B5 = micro symbol
+	"μm": float64(Micrometer), // U+03BC = Greek letter mu
+	"mm": float64(Millimeter),
+	"cm": float64(Centimeter),
+	"m":  float64(Meter),
+	"km": float64(Kilometer),
+	"in": float64(Inch),
+	"ft": float64(Feet),
+	"yd": float64(Yard),
+	"mi": float64(Mile),
+	"ly": float64(Lightyear),
+}
+
+// ParseDistance parses a distance string.
+// A distance string is a possibly signed sequence of
+// decimal numbers, each with optional fraction and a unit suffix,
+// such as "300m" or "-1.5ly"
+// Valid time units are "nm", "um" (or "µm"), "mm", "m", "km", "in", "ft", "yd", "mi", "ly".
+func ParseDistance(s string) (Distance, error) {
+	// WIP
+	return Distance(0 * unitMap["m"]), nil
 }
