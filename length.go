@@ -275,5 +275,5 @@ func ParseDistance(s string) (Distance, error) {
 	if neg {
 		d = -d
 	}
-	return Distance(d), nil
+	return Distance(1), nil
 }
