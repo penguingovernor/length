@@ -32,13 +32,25 @@ const (
 	Lightyear           = 9.461e12 * Kilometer
 )
 
-var useMetric = true
+var usingMetric = true
 
 // ToggleUnits toggles the units (metric <=> imperial) that are printed whenever the String
 // function is called (as is the case in family of printing functions in the fmt package).
 // By default the metric system is used.
 func ToggleUnits() {
-	useMetric = !useMetric
+	usingMetric = !usingMetric
+}
+
+// UseMetric toggles the units to use the metric system.
+// See ToggleUnits for more information.
+func UseMetric() {
+	usingMetric = true
+}
+
+// UseImperial toggles the units to use the imperial system.
+// See ToggleUnits for more information.
+func UseImperial() {
+	usingMetric = false
 }
 
 // String returns a string representing the distance in the form "10m" or "10yd".
@@ -48,7 +60,7 @@ func ToggleUnits() {
 // that the leading digit is non-zero. The zero duration formats as 0m or 0yd.
 func (d Distance) String() string {
 	// If in metric mode
-	if useMetric {
+	if usingMetric {
 		return d.printMetric()
 	}
 	return d.printImperial()
