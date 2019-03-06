@@ -8,7 +8,7 @@
 `Length` can be installed via the `go get` tool
 
 ```shell
-$ go get -u github.com/penguingovernor
+$ go get -u github.com/penguingovernor/length
 ```
 
 ## Documentation
