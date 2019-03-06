@@ -1,6 +1,8 @@
 package length
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestDistance_String(t *testing.T) {
 	type beforeFunc func()
@@ -91,6 +93,95 @@ func TestDistance_String(t *testing.T) {
 			tt.before()
 			if got := tt.d.String(); got != tt.want {
 				t.Errorf("Distance.String() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestParseDistance(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    Distance
+		wantErr bool
+	}{
+		{
+			name: "12 Meters",
+			args: args{
+				s: "12m",
+			},
+			want:    Distance(12 * Meter),
+			wantErr: false,
+		},
+		{
+			name: "0 Meters",
+			args: args{
+				s: "0m",
+			},
+			want:    Distance(0),
+			wantErr: false,
+		},
+		{
+			name: "Bad Unit",
+			args: args{
+				s: "0ms",
+			},
+			want:    Distance(0),
+			wantErr: true,
+		},
+		{
+			name: "No Unit",
+			args: args{
+				s: "12",
+			},
+			want:    Distance(0),
+			wantErr: true,
+		},
+		{
+			name: "Negative Unit",
+			args: args{
+				s: "-1nm",
+			},
+			want:    Distance(-1 * Nanometer),
+			wantErr: false,
+		},
+		{
+			name: "Partial Unit",
+			args: args{
+				s: "-1.9mi",
+			},
+			want:    Distance(-1.9 * Mile),
+			wantErr: false,
+		},
+		{
+			name: "No Digits",
+			args: args{
+				s: "-.ly",
+			},
+			want:    0,
+			wantErr: true,
+		},
+		{
+			name: "Multiple Units",
+			args: args{
+				s: "5ft11in",
+			},
+			want:    Distance(5*Feet) + Distance(11*Inch),
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ParseDistance(tt.args.s)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ParseDistance() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("ParseDistance() = %v, want %v", got, tt.want)
 			}
 		})
 	}
